@@ -1,0 +1,18 @@
+*.secret
+.env
+.envrc
+.env.*
+
+.ssh/
+
+# macOS
+.DS_Store
+
+# Vim/nvim Swap/Session
+*.swp
+*.swo
+Session.vim
+
+# Local overrides
+**/local.sh
+**/*.local

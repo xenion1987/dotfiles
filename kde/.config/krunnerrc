@@ -1,0 +1,17 @@
+[General]
+ActivateWhenTypingOnDesktop=false
+FreeFloating=true
+
+[Plugins]
+baloosearchEnabled=false
+browserhistoryEnabled=false
+krunner_appstreamEnabled=false
+krunner_recentdocumentsEnabled=false
+krunner_webshortcutsEnabled=false
+org.kde.activities2Enabled=false
+
+[Plugins][Favorites]
+plugins=krunner_sessions,krunner_services,krunner_systemsettings
+
+[Runners][krunner_dictionary]
+triggerWord=explain

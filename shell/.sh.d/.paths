@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Paths that are inserted BEFORE $PATH (higher priority)
+PATHS_FIRST=(
+  "${HOME}/.local/bin"
+)
+
+# Paths appended AFTER $PATH (lower priority)
+PATHS_LAST=(
+  # e.g. /opt/apps
+)
+
+# _add_path <first|last> <path...>
+_add_path() {
+  local position="${1}"
+  shift
+
+  for p in "${@}"; do
+    # Skip if path is already included (exact substring match)
+    [[ ":${PATH}:" == *":${p}:"* ]] && continue
+
+    if [[ "${position}" == first ]]; then
+      PATH="${p}:${PATH}"
+    else
+      PATH="${PATH}:${p}"
+    fi
+  done
+
+  export PATH
+}
+
+_add_path first "${PATHS_FIRST[@]}"
+_add_path last "${PATHS_LAST[@]}"

@@ -1,0 +1,1 @@
+jq -r '._meta.hostvars | to_entries | map("\(.key)\t\(.value.ansible_host)")[]'< <(ansible-inventory --list -i inventory/openstack)

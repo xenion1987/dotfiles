@@ -1,0 +1,14 @@
+return {
+  {
+    "mason-org/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "ansible-language-server",
+        "ansible-lint",
+        "shellcheck",
+        "shfmt",
+        "yamllint",
+      })
+    end,
+  },
+}

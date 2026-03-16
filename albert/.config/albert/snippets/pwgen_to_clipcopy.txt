@@ -1,0 +1,1 @@
+clipcopy< <(pwgen -Bys 32 1)

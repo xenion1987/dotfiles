@@ -1,0 +1,58 @@
+[
+    {
+        "fallback": true,
+        "iconPath": ":gpt",
+        "id": "9e90462b",
+        "name": "Chat GPT",
+        "trigger": "gpt",
+        "url": "https://chat.openai.com/?q=%s"
+    },
+    {
+        "fallback": false,
+        "iconPath": ":duckduckgo",
+        "id": "9e9bc619",
+        "name": "DuckDuckGo",
+        "trigger": "dd",
+        "url": "https://start.duckduckgo.com/?kbg=-1&kbe=0&kbj=1&k5=2&kp=-2&kav=1&kn=1&k1=-1&kk=-1&kaj=m&kat=-1&kak=-1&kax=-1&kaq=-1&kap=-1&kao=-1&kau=-1&kpsb=-1&kg=p&q=%s"
+    },
+    {
+        "fallback": true,
+        "iconPath": ":github",
+        "id": "1aacadc6",
+        "name": "GitHub",
+        "trigger": "gh",
+        "url": "https://github.com/search?utf8=✓&q=%s"
+    },
+    {
+        "fallback": true,
+        "iconPath": ":maps",
+        "id": "f7b69ce6",
+        "name": "Google Maps",
+        "trigger": "maps",
+        "url": "https://www.google.com/maps/search/%s/"
+    },
+    {
+        "fallback": false,
+        "iconPath": ":google_translate",
+        "id": "e745ce4d",
+        "name": "Google Translate",
+        "trigger": "gt",
+        "url": "https://translate.google.com/?text=%s"
+    },
+    {
+        "fallback": false,
+        "iconPath": ":youtube",
+        "id": "fbf64f26",
+        "name": "YouTube",
+        "trigger": "yt",
+        "url": "https://www.youtube.com/results?search_query=%s"
+    },
+    {
+        "fallback": true,
+        "iconPath": ":default",
+        "id": "52f7ba0d",
+        "name": "eu.startpage.com",
+        "trigger": "ws",
+        "url": "https://eu.startpage.com/sp/search?abp=1&t=device&lui=deutsch&sc=Q5FfFaGEm1v020&cat=web&abd=1&prfe=f2946fe43415be143c833f7c887febeb8d126cd5629128ed29c62a241b020b4a4525d3068d5b6de8b9c59a0f68dfcc27f201864d8496aa20ce6daa35a8391da8ee09529aa73712fd6402d7d1e8&query=%s"
+    }
+]

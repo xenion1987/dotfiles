@@ -1,0 +1,1 @@
+git branch --merged | grep -Ev "main|\*" | xargs -r git branch -d

@@ -1,0 +1,4 @@
+sync_address = "https://atuin.access-intech.de"
+enter_accept = false
+[sync]
+records = true

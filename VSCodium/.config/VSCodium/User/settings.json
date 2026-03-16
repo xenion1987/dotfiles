@@ -1,0 +1,52 @@
+{
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "chat.agent.enabled": false,
+  "chat.disableAIFeatures": true,
+  "diffEditor.hideUnchangedRegions.enabled": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.fontSize": 14,
+  "editor.formatOnSave": true,
+  "editor.indentSize": 2,
+  "editor.tabSize": 2,
+  "editor.rulers": [
+    80,
+    120
+  ],
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "extensions.ignoreRecommendations": true,
+  "files.autoSave": "off",
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "git.autofetch": "all",
+  "git.autofetchPeriod": 90,
+  "git.autorefresh": true,
+  "git.confirmSync": false,
+  "git.ignoreRebaseWarning": true,
+  "git.pullTags": false,
+  "telemetry.feedback.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.initialHint": false,
+  "terminal.integrated.scrollback": 50000,
+  "vsicons.dontShowNewVersionMessage": true,
+  "workbench.editor.empty.hint": "hidden",
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "workbench.settings.applyToAllProfiles": [
+    "chat.agent.enabled",
+    "chat.disableAIFeatures",
+    "inlineChat.accessibleDiffView",
+    "telemetry.feedback.enabled",
+    "terminal.integrated.initialHint",
+  ],
+  "workbench.startupEditor": "none",
+  "window.newWindowProfile": "Default",
+  "workbench.colorTheme": "Monokai Dimmed",
+}

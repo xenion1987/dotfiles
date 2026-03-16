@@ -1,0 +1,18 @@
+[user]
+	name = Xenion1987
+	email = 39803750+Xenion1987@users.noreply.github.com
+	signingkey = ~/.ssh/mrvn_personal.ed25519.pub
+[core]
+	pager = bat -pp
+[pull]
+	rebase = false
+[push]
+	autoSetupRemote = true
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSigners = ~/.ssh/mrvn_personal.ed25519.pub
+[init]
+	defaultBranch = main

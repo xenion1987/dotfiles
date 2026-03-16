@@ -1,0 +1,24 @@
+[Annotations]
+annotationToolType=5
+rectangleStrokeColor=255,0,255
+rectangleStrokeWidth=3
+
+[General]
+autoSaveImage=true
+clipboardGroup=PostScreenshotCopyImage
+
+[GuiConfig]
+includePointer=true
+includeShadow=false
+quitAfterSaveCopyExport=true
+
+[ImageSave]
+lastImageSaveLocation=file:///home/mrvn/Bilder/Bildschirmfotos/Bildschirmfoto_20260311_221414.png
+translatedScreenshotsFolder=Bildschirmfotos
+
+[VideoSave]
+translatedScreencastsFolder=Bildschirmaufnahmen
+
+[ViewerWindow]
+2 screens: Height=570
+2 screens: Width=950

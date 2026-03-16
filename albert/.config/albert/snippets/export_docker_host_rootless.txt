@@ -1,0 +1,1 @@
+export DOCKER_HOST=unix://$(find /run/user/ -name "docker.sock")

@@ -1,0 +1,1 @@
+awk '{sum+=$7;} END{print sum/1024/1024 " MB"}'

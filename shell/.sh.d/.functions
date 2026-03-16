@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2154 # funcstack is referenced but not assigned.
+
+function gcx() {
+  git config user.name Xenion1987
+  git config user.email 39803750+Xenion1987@users.noreply.github.com
+}
+function fork-sync-upstream() {
+  if grep -qw upstream < <(git remote); then
+    if grep -Eq "(main|master)" < <(git branch --show-current); then
+      git fetch upstream && git pull upstream main && git push origin main
+    else
+      echo "You are not on the 'main' or 'master' branch"
+    fi
+  fi
+}
+function get-function() {
+  sed -rn "/^function (.*)${1}(.*)/,/^\}$/p" "${HOME}/.functions"
+}
+function cheat() {
+  curl -sS "https://cheat.sh/${1}"
+}

@@ -1,0 +1,9 @@
+## Create and push a single tag
+# git tag $NEW_TAG
+# git push origin $NEW_TAG
+## Create and push an existing single tag
+# git tag latest -f
+# git push origin latest -f
+## Create specific tag + latest and push both
+# git tag $NEW_TAG && git tag -f latest && git push origin --tags
+

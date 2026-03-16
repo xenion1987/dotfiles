@@ -1,0 +1,210 @@
+#!/usr/bin/env bash
+
+#########################################################
+# tmux functions
+#########################################################
+
+# Fix SSH agent forwarding. Best added to .bashrc/.zshrc
+function fixssh() {
+  if [[ -n ${TMUX} ]]; then
+    eval "$(grep '^SSH_' < <(tmux show-env -s))"
+  else
+    return 1
+  fi
+}
+
+# Make short hostname only if it's not an IP address
+function __tm_get_hostname() {
+  local HOST
+  HOST="$(echo "$*" | rev | cut -d ' ' -f 1 | rev)"
+  if echo "${HOST}" | grep -qE "^([0-9]+\.){3}[0-9]+$"; then
+    echo "${HOST}"
+  else
+    echo "${HOST}" | cut -d . -f 1
+  fi
+}
+
+function __tm_get_current_window() {
+  tmux list-windows | awk -F: '/\(active\)$/{print $1}'
+}
+
+# Rename window according to __tm_get_hostname and restore it after the command
+function __tm_command() {
+  local parent_cmd
+  parent_cmd="$(ps -p "$(ps -p $$ -o ppid= | tr -d '[:space:]')" -o comm= | cut -d: -f1)"
+
+  case "${parent_cmd}" in
+  tmux*)
+    local __tm_window
+    __tm_window=$(__tm_get_current_window)
+    local my_shell="${SHELL##*/}"
+    local trap_signal
+
+    case "${my_shell}" in
+    zsh) trap_signal="EXIT" ;;
+    *) trap_signal="RETURN" ;;
+    esac
+
+    # shellcheck disable=SC2064
+    trap "tmux set-window-option -t ${__tm_window} automatic-rename on >/dev/null" "${trap_signal}"
+    tmux rename-window "$(__tm_get_hostname "$*")"
+    ;;
+  esac
+
+  command "$@"
+}
+
+function ssh() {
+  __tm_command ssh "$@"
+}
+
+#########################################################
+# tmux wrapper
+#########################################################
+
+# Return list of active tmux session names
+function __tmux_sessions() {
+  local sessions=()
+  if tmux ls &>/dev/null; then
+    mapfile -t sessions < <(tmux ls -F '#{session_name}' 2>/dev/null)
+  fi
+  echo "${sessions[@]}"
+}
+
+# List tmux sessions
+function tml() {
+  tmux ls 2>/dev/null || echo "No tmux sessions running"
+}
+
+# Create a new tmux session
+function tmn() {
+  local NAME="${1:-default}"
+
+  if [[ "$NAME" =~ [[:space:]:] ]]; then
+    echo "Invalid session name '$NAME' (no spaces or colons allowed)"
+    return 1
+  fi
+
+  if tmux has-session -t "$NAME" 2>/dev/null; then
+    echo "Session '$NAME' already exists"
+    return 1
+  fi
+
+  tmux new -s "$NAME"
+}
+
+# Attach to a tmux session (by name or interactively)
+function tma() {
+  local MY_SHELL="${SHELL##*/}"
+  local TARGET="$1"
+  local SESSIONS
+  read -ra SESSIONS <<<"$(__tmux_sessions)"
+
+  if [[ ${#SESSIONS[@]} -eq 0 ]]; then
+    echo "No tmux sessions available"
+    return 1
+  fi
+
+  # Direct connect if name given
+  if [[ -n "$TARGET" ]]; then
+    if tmux has-session -t "$TARGET" 2>/dev/null; then
+      tmux attach -t "$TARGET"
+      return
+    else
+      echo "Session '$TARGET' does not exist"
+      return 1
+    fi
+  fi
+
+  # Auto-attach if only one session exists
+  if [[ ${#SESSIONS[@]} -eq 1 ]]; then
+    tmux attach -t "${SESSIONS[0]}"
+    return
+  fi
+
+  # Interactive selection
+  for i in "${!SESSIONS[@]}"; do
+    printf "%d: %s\n" $((i + 1)) "${SESSIONS[$i]}"
+  done
+
+  printf "Choose session to attach: "
+  local CHOICE
+  if [[ "$MY_SHELL" == "zsh" ]]; then
+    read -r -k1 CHOICE
+  else
+    read -r -n1 CHOICE
+  fi
+  echo
+
+  if [[ "$CHOICE" =~ ^[0-9]+$ ]] && ((CHOICE >= 1 && CHOICE <= ${#SESSIONS[@]})); then
+    tmux attach -t "${SESSIONS[CHOICE - 1]}"
+  else
+    echo "--> Invalid choice - cancelled"
+    return 1
+  fi
+}
+
+# Kill a tmux session (by name, "all", or interactively)
+function tmk() {
+  local MY_SHELL="${SHELL##*/}"
+  local TARGET="$1"
+  local SESSIONS
+  read -ra SESSIONS <<<"$(__tmux_sessions)"
+
+  if [[ ${#SESSIONS[@]} -eq 0 ]]; then
+    echo "No tmux sessions available"
+    return 1
+  fi
+
+  # Kill all sessions
+  if [[ "$TARGET" == "all" ]]; then
+    tmux kill-server && echo "All tmux sessions terminated"
+    return
+  fi
+
+  # Kill named session directly
+  if [[ -n "$TARGET" ]]; then
+    if tmux has-session -t "$TARGET" 2>/dev/null; then
+      tmux kill-session -t "$TARGET"
+      echo "Session '$TARGET' terminated"
+      return
+    else
+      echo "Session '$TARGET' does not exist"
+      return 1
+    fi
+  fi
+
+  # Interactive selection
+  for i in "${!SESSIONS[@]}"; do
+    printf "%d: %s\n" $((i + 1)) "${SESSIONS[$i]}"
+  done
+
+  printf "Choose session to terminate: "
+  local CHOICE
+  if [[ "$MY_SHELL" == "zsh" ]]; then
+    read -r -k1 CHOICE
+  else
+    read -r -n1 CHOICE
+  fi
+  echo
+
+  if [[ "$CHOICE" =~ ^[0-9]+$ ]] && ((CHOICE >= 1 && CHOICE <= ${#SESSIONS[@]})); then
+    local NAME="${SESSIONS[CHOICE - 1]}"
+    tmux kill-session -t "$NAME"
+    echo "Session '$NAME' terminated"
+  else
+    echo "--> Invalid choice - cancelled"
+    return 1
+  fi
+}
+
+# Auto-attach to or create the "default" session (call from .bashrc/.zshrc)
+function tmux_auto_attach() {
+  if [[ -z "${TMUX}" ]]; then
+    if tmux has-session -t "default" 2>/dev/null; then
+      tmux attach -t "default"
+    else
+      tmux new -s "default"
+    fi
+  fi
+}

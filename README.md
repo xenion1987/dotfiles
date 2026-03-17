@@ -10,19 +10,19 @@ from `$HOME` into the corresponding package directory.
 
 | Tool     | Install                                        |
 | -------- | ---------------------------------------------- |
-| GNU Stow | Package manager                                |
-| Git      | Package manager                                |
-| Zsh      | Package manager                                |
-| tmux     | Package manager                                |
 | albert   | https://albertlauncher.github.io/installation/ |
 | atuin    | https://docs.atuin.sh/cli/guide/installation/  |
 | direnv   | https://direnv.net/docs/installation.html      |
 | ghostty  | https://ghostty.org/docs/install/binary        |
-| wezterm  | https://wezterm.org/installation.html          |
-| nvim     | Package manager                                |
+| git      | Package manager                                |
 | LazyVim  | https://www.lazyvim.org/installation           |
+| nvim     | Package manager                                |
+| stow     | Package manager                                |
+| tmux     | Package manager                                |
 | vim      | Package manager                                |
 | VSCodium | https://vscodium.com/                          |
+| wezterm  | https://wezterm.org/installation.html          |
+| zsh      | Package manager                                |
 
 
 ## Machine-specific Overrides
@@ -30,28 +30,36 @@ from `$HOME` into the corresponding package directory.
 Some settings are intentionally **not** tracked in this repo.
 Create these files locally — they will be sourced automatically if they exist:
 
-**`~/.gitconfig.local`** — Git identity per machine:
+### `.gitconfig`
+
+```sh
+cp "${DOTFILES_DIR}"/git/.gitconfig.local.example "${HOME}/.gitconfig.local"
+```
+
+**Example:**
 
 ```ini
 [user]
-    name = Your Name
-    email = you@example.com
-    signingkey = ABC123
+	name = Xenion1987
+	email = 39803750+Xenion1987@users.noreply.github.com
 ```
 
-Referenced from `.gitconfig` via:
+### `.zshrc`
 
-```ini
-[include]
-    path = ~/.gitconfig.local
+```sh
+cp "${DOTFILES_DIR}"/zsh/.zshrc.local.example "${HOME}/.zshrc.local"
 ```
 
-**`~/.zshrc.local`** — Shell overrides per machine:
+**Example:**
 
-```zsh
-export KUBECONFIG=~/.kube/my-cluster.yaml
-alias vpn="openconnect vpn.example.com"
+```sh
+osctx() { __osctx "$@" && [[ -s ~/.config/openstack/.osctx ]] && . ~/.config/openstack/.osctx; }
 ```
+
+### `.sh.d/`
+
+Once `shell` is _stowed_, you may copy each `$HOME/.sh.d/<TYPE>.local.example` to
+`$HOME/.sh.d/<TYPE>.local` and modify it's contents.
 
 ## Adding a New Package
 
@@ -91,17 +99,18 @@ stow --delete --dir="${DOTFILES_DIR}" --target="${HOME}" "${PACKAGE}"
 stow --adopt --dir="${DOTFILES_DIR}" --target="${HOME}" "${PACKAGE}"
 ```
 
-## tmux
+## Setup `tmux`
 
 ```sh
 DOTFILES_DIR="${HOME}/workspace/dotfiles"
 stow --dir="${DOTFILES_DIR}" --target="${HOME}" tmux
-tmux new-session -d -s install_plugins '~/.tmux/plugins/tpm/bin/install_plugins'
+git clone https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
+tmux new-session -d -s install_plugins "${HOME}/.tmux/plugins/tpm/bin/install_plugins"
 ```
 
 That's all. Start `tmux`.
 
-## oh-my-zsh
+## Setup `oh-my-zsh` + `powerlevel10k`
 
 ```sh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -112,4 +121,5 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 rm -f "${HOME}/.zshrc"
 DOTFILES_DIR="${HOME}/workspace/dotfiles"
 stow --dir="${DOTFILES_DIR}" --target="${HOME}" zsh
+cp "${DOTFILES_DIR}"/zsh/.zshrc.local.example "${HOME}/.zshrc.local"
 ```

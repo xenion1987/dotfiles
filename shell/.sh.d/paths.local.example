@@ -1,0 +1,9 @@
+PATHS_FIRST=(
+  "${HOME}/.local/bin"
+  "/opt/homebrew/opt/gnu-sed/libexec/gnubin"
+  "/opt/homebrew/opt/coreutils/libexec/gnubin"
+)
+PATHS_LAST=(
+  "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  "/Applications/WezTerm.app/Contents/MacOS"
+)

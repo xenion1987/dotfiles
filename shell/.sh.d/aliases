@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 alias crc='cat ~/.${SHELL##*/}rc'
 alias erc='${EDITOR} ~/.${SHELL##*/}rc'
 alias src='. ~/.${SHELL##*/}rc'
@@ -7,6 +5,5 @@ alias lg='lazygit'
 alias vim='nvim'
 alias cat='bat -pp'
 alias ls=eza
-alias la='eza -la'
 alias ll='eza -l'
-alias code=codium
+alias la='eza -la'

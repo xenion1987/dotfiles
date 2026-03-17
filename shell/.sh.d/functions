@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2154 # funcstack is referenced but not assigned.
-
 function gcx() {
   git config user.name Xenion1987
   git config user.email 39803750+Xenion1987@users.noreply.github.com

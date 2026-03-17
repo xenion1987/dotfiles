@@ -1,0 +1,13 @@
+# source_files=($(find "${HOME}/.sh.d/" -type f))
+# for f in "${source_files[@]}"; do
+#   [[ ! -s "${f}" ]] || . "${f}"
+# done
+#
+# ### Uncomment if atuin should be used
+# [[ ! -f "${HOME}/.atuin/bin/env" ]] || . "${HOME}/.atuin/bin/env"
+# if command -v atuin >/dev/null; then eval "$(atuin init zsh --disable-up-arrow)"; fi
+#
+# ### Uncomment if Bitwarden SSH agent should be used
+# export SSH_AUTH_SOCK=/home/$(whoami)/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock
+#
+# export DOTFILES_DIR="${HOME}/workspace/dotfiles"

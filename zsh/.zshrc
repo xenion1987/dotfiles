@@ -115,12 +115,4 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
-source_files=($(find "${HOME}/.sh.d/" -type f))
-for f in "${source_files[@]}"; do
-  [[ ! -f "${f}" ]] || . "${f}"
-done
-[[ ! -f "${HOME}/.atuin/bin/env" ]] || . "${HOME}/.atuin/bin/env"
-if command -v atuin >/dev/null; then eval "$(atuin init zsh --disable-up-arrow)"; fi
-# Uncomment if Bitwarden SSH agent should be used
-export SSH_AUTH_SOCK=/home/$(whoami)/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock
-export DOTFILES_DIR="${HOME}/workspace/dotfiles"
+[[ ! -s ~/.zshrc.local ]] || . ~/.zshrc.local

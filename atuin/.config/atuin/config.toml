@@ -1,4 +1,8 @@
 sync_address = "https://atuin.access-intech.de"
 enter_accept = false
+[ai]
+enabled = false
+[dotfiles]
+enabled = true
 [sync]
 records = true

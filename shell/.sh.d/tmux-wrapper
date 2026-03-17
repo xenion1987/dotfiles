@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 #########################################################
 # tmux functions
 #########################################################
@@ -62,13 +61,24 @@ function ssh() {
 # tmux wrapper
 #########################################################
 
-# Return list of active tmux session names
+# Populate a variable (by name) with an array of active tmux session names.
+# Usage: __tmux_sessions VARNAME
+# Compatible with both bash and zsh.
 function __tmux_sessions() {
-  local sessions=()
+  local _var="$1"
+  local _sessions=()
+
   if tmux ls &>/dev/null; then
-    mapfile -t sessions < <(tmux ls -F '#{session_name}' 2>/dev/null)
+    while IFS= read -r _line; do
+      [[ -n "$_line" ]] && _sessions+=("$_line")
+    done < <(tmux ls -F '#{session_name}' 2>/dev/null)
   fi
-  echo "${sessions[@]}"
+
+  # Assign to the caller's variable via printf + eval (bash+zsh compatible)
+  # Build a safely-quoted list and assign it
+  local _quoted
+  _quoted="$(printf '%q ' "${_sessions[@]}")"
+  eval "${_var}=(${_quoted})"
 }
 
 # List tmux sessions
@@ -97,8 +107,8 @@ function tmn() {
 function tma() {
   local MY_SHELL="${SHELL##*/}"
   local TARGET="$1"
-  local SESSIONS
-  read -ra SESSIONS <<<"$(__tmux_sessions)"
+  local -a SESSIONS
+  __tmux_sessions SESSIONS
 
   if [[ ${#SESSIONS[@]} -eq 0 ]]; then
     echo "No tmux sessions available"
@@ -123,21 +133,23 @@ function tma() {
   fi
 
   # Interactive selection
-  for i in "${!SESSIONS[@]}"; do
-    printf "%d: %s\n" $((i + 1)) "${SESSIONS[$i]}"
+  local i=1
+  for session in "${SESSIONS[@]}"; do
+    printf "%d: %s\n" "$i" "$session"
+    ((i++))
   done
 
   printf "Choose session to attach: "
   local CHOICE
   if [[ "$MY_SHELL" == "zsh" ]]; then
-    read -r -k1 CHOICE
+    read -rk1 CHOICE
   else
-    read -r -n1 CHOICE
+    read -rn1 CHOICE
   fi
   echo
 
   if [[ "$CHOICE" =~ ^[0-9]+$ ]] && ((CHOICE >= 1 && CHOICE <= ${#SESSIONS[@]})); then
-    tmux attach -t "${SESSIONS[CHOICE - 1]}"
+    tmux attach -t "${SESSIONS[CHOICE-1]}"
   else
     echo "--> Invalid choice - cancelled"
     return 1
@@ -148,8 +160,8 @@ function tma() {
 function tmk() {
   local MY_SHELL="${SHELL##*/}"
   local TARGET="$1"
-  local SESSIONS
-  read -ra SESSIONS <<<"$(__tmux_sessions)"
+  local -a SESSIONS
+  __tmux_sessions SESSIONS
 
   if [[ ${#SESSIONS[@]} -eq 0 ]]; then
     echo "No tmux sessions available"
@@ -175,21 +187,23 @@ function tmk() {
   fi
 
   # Interactive selection
-  for i in "${!SESSIONS[@]}"; do
-    printf "%d: %s\n" $((i + 1)) "${SESSIONS[$i]}"
+  local i=1
+  for session in "${SESSIONS[@]}"; do
+    printf "%d: %s\n" "$i" "$session"
+    ((i++))
   done
 
   printf "Choose session to terminate: "
   local CHOICE
   if [[ "$MY_SHELL" == "zsh" ]]; then
-    read -r -k1 CHOICE
+    read -rk1 CHOICE
   else
-    read -r -n1 CHOICE
+    read -rn1 CHOICE
   fi
   echo
 
   if [[ "$CHOICE" =~ ^[0-9]+$ ]] && ((CHOICE >= 1 && CHOICE <= ${#SESSIONS[@]})); then
-    local NAME="${SESSIONS[CHOICE - 1]}"
+    local NAME="${SESSIONS[CHOICE-1]}"
     tmux kill-session -t "$NAME"
     echo "Session '$NAME' terminated"
   else

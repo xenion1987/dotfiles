@@ -13,6 +13,10 @@
 *.swo
 Session.vim
 
+# LazyVim
+lazy-lock.json
+lazyvim.json
+
 # Local overrides
 **/local.sh
 **/*.local

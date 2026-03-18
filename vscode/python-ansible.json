@@ -1,0 +1,23 @@
+{
+    "[ansible]": {
+        "editor.autoIndent": "full",
+        "editor.detectIndentation": false,
+    },
+    "ansible.ansible.path": ".venv/bin/ansible",
+    "ansible.lightspeed.enabled": false,
+    "ansible.python.activationScript": ".venv/bin/activate",
+    "ansible.python.interpreterPath": ".venv/bin/python",
+    "files.associations": {
+        ".ansible-lint": "yaml",
+        ".pre-commit-config.y*ml": "yaml",
+        ".yamllint": "yaml",
+        "*.y*ml": "ansible",
+        "**/*.j2": "ansible-jinja",
+        "**/inventory/**/*.ini": "toml",
+        "**/tests/*.y*ml": "ansible",
+        "**/tests/inventory": "toml",
+        "ansible.cfg": "properties"
+    },
+    "python.terminal.activateEnvironment": true,
+    "redhat.telemetry.enabled": false,
+}

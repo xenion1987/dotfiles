@@ -1,1 +1,1 @@
-git commit -m "$(awk '$0 ~ /^\*/ {print $2}'< <(git branch) | sed 's,/,: ,g')"
+git commit -m "$(git branch --show-current | sed 's,/,: ,g')"

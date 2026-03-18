@@ -5,6 +5,9 @@
 
 .ssh/
 
+# atuin
+atuin-receipt.json
+
 # macOS
 .DS_Store
 

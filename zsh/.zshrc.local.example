@@ -1,13 +1,15 @@
+# ### Uncomment if atuin should be used
+# [[ ! -f "${HOME}/.atuin/bin/env" ]] || . "${HOME}/.atuin/bin/env"
+# if command -v atuin >/dev/null; then
+#   eval "$(atuin init zsh --disable-up-arrow)"
+#   . <(atuin gen-completions --shell zsh)
+# fi
+# ### Uncomment if Bitwarden SSH agent should be used
+# BITWARDEN_FLATPAK_DATA_DIR="${HOME}/.var/app/com.bitwarden.desktop/data"
+# BITWARDEN_FLATPAK_SSH_SOCKET="${BITWARDEN_FLATPAK_DATA_DIR}/.bitwarden-ssh-agent.sock"
+# [[ ! -S "${BITWARDEN_FLATPAK_SSH_SOCKET}" ]] || export SSH_AUTH_SOCK="${BITWARDEN_FLATPAK_SSH_SOCKET}"
+# 
 # source_files=($(find "${HOME}/.sh.d/" -type f | grep -Ev "\.example$"))
 # for f in "${source_files[@]}"; do
 #   [[ ! -s "${f}" ]] || . "${f}"
 # done
-
-# ### Uncomment if atuin should be used
-# [[ ! -f "${HOME}/.atuin/bin/env" ]] || . "${HOME}/.atuin/bin/env"
-# if command -v atuin >/dev/null; then eval "$(atuin init zsh --disable-up-arrow)"; fi
-
-# ### Uncomment if Bitwarden SSH agent should be used
-# export SSH_AUTH_SOCK=/home/$(whoami)/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock
-
-# export DOTFILES_DIR="${HOME}/workspace/dotfiles"

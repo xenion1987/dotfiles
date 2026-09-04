@@ -20,6 +20,13 @@ return {
             },
           },
         },
+        terraformls = {
+          init_options = {
+            terraform = {
+              path = vim.fn.exepath("terraform"), -- Binary from PATH
+            },
+          },
+        },
       },
     },
   },

@@ -8,14 +8,6 @@
 # atuin
 atuin-receipt.json
 
-# macOS
-.DS_Store
-
-# Vim/nvim Swap/Session
-*.swp
-*.swo
-Session.vim
-
 # LazyVim
 lazy-lock.json
 lazyvim.json
@@ -23,3 +15,16 @@ lazyvim.json
 # Local overrides
 **/local.sh
 **/*.local
+
+# macOS
+.DS_Store
+
+# tmux
+tmux/.tmux/plugins/*
+!tmux/.tmux/plugins/.gitkeep
+
+# Vim/nvim Swap/Session
+*.swp
+*.swo
+Session.vim
+

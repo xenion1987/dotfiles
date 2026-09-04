@@ -1,10 +1,10 @@
 [core]
-	pager = bat -pp
+  pager = bat -pp
 [pull]
-	rebase = false
+  rebase = false
 [push]
-	autoSetupRemote = true
+  autoSetupRemote = true
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [include]
-    path = ~/.gitconfig.local
+  path = ~/.gitconfig.local

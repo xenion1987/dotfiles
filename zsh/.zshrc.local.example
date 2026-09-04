@@ -9,7 +9,10 @@
 # BITWARDEN_FLATPAK_SSH_SOCKET="${BITWARDEN_FLATPAK_DATA_DIR}/.bitwarden-ssh-agent.sock"
 # [[ ! -S "${BITWARDEN_FLATPAK_SSH_SOCKET}" ]] || export SSH_AUTH_SOCK="${BITWARDEN_FLATPAK_SSH_SOCKET}"
 # 
-# source_files=($(find "${HOME}/.sh.d/" -type f | grep -Ev "\.example$"))
-# for f in "${source_files[@]}"; do
+# # Sorted glob, so base files are sourced before their *.local overrides.
+# # Qualifiers: . = regular files, @ = symlinks, N = no error if nothing matches.
+# for f in "${HOME}"/.sh.d/*(.,@N); do
+#   [[ "${f}" == *.example ]] && continue
 #   [[ ! -s "${f}" ]] || . "${f}"
 # done
+# unset f

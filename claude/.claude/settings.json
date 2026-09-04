@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "atuin hook claude-code",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          {
+            "command": "atuin hook claude-code",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "$HOME/.claude/hooks/deny-sensitive-reads.sh",
+            "type": "command"
+          },
+          {
+            "command": "atuin hook claude-code",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ]
+  },
+  "model": "opus[1m]",
+  "permissions": {
+    "deny": [
+      "Bash(env *)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/.envrc)",
+      "Read(**/.envrc.*)",
+      "Read(**/.vault_password*.txt)",
+      "Read(~/.aws/credentials)",
+      "Read(~/.ssh/**)",
+      "Read(~/.config/openstack/secure.y*ml)",
+      "Read(~/.config/openstack/*.sh)",
+      "Read(*.pem)",
+      "Read(*.rsa)",
+      "Read(*.ed25519)",
+      "Read(*.gpg)",
+      "Read(*.key)",
+      "Read(**/.direnv/**)",
+      "Read(**/.venv/**)",
+      "Read(**/venv/**)",
+      "Read(**/env/**)",
+      "Read(**/.terragrunt-cache/**)",
+      "Read(**/node_modules/**)",
+      "Read(**/__pycache__/**)",
+      "Read(**/.git/**)"
+    ]
+  },
+  "theme": "dark"
+}

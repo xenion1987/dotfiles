@@ -28,3 +28,18 @@ tmux/.tmux/plugins/*
 *.swo
 Session.vim
 
+
+# Claude Code: stow target is ~/.claude, which Claude fills with runtime state
+# (credentials, sessions, caches, history, project data). Ignore everything and
+# whitelist only the config that belongs in this repo.
+claude/.claude/**
+!claude/.claude/settings.json
+!claude/.claude/CLAUDE.md
+!claude/.claude/hooks/
+!claude/.claude/hooks/**
+!claude/.claude/agents/
+!claude/.claude/agents/**
+!claude/.claude/commands/
+!claude/.claude/commands/**
+!claude/.claude/skills/
+!claude/.claude/skills/**

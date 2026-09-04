@@ -28,7 +28,7 @@ is_kde() {
 # ══════════════════════════════════════════════════════════════════════════════
 
 stow_packages() {
-  local PACKAGES=(shell git tmux nvim wezterm atuin direnv zsh)
+  local PACKAGES=(shell git tmux nvim wezterm atuin direnv zsh claude opencode)
 
   if is_kde; then
     log "KDE detected – adding kde package"

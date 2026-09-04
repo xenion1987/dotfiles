@@ -14,8 +14,15 @@ function fork-sync-upstream() {
   fi
 }
 function get-function() {
-  sed -rn "/^function (.*)${1}(.*)/,/^\}$/p" "${HOME}/.functions"
+  sed -rn "/^function (.*)${1}(.*)/,/^\}$/p" "${HOME}/.sh.d/functions"
 }
 function cheat() {
   curl -sS "https://cheat.sh/${1}"
+}
+function lower() {
+  if [ $# -gt 0 ]; then
+    tr '[:upper:]' '[:lower:]' <<<"$*"
+  else
+    tr '[:upper:]' '[:lower:]'
+  fi
 }
